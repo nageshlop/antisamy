@@ -367,15 +367,31 @@ public class CssValidator {
 			// this is a rgb encoded color
 			StringBuffer sb = new StringBuffer("rgb(");
 			LexicalUnit param = lu.getParameters();
-			sb.append(param.getIntegerValue()); // R value
+			String paramClass = param.getClass().getName();
+
+			if (paramClass.contains("FloatLexicalUnit")) {
+				sb.append(param.getFloatValue()); // R value
+			} else {
+				sb.append(param.getIntegerValue()); // R value
+			}
 			sb.append(',');
 			param = param.getNextLexicalUnit(); // comma
 			param = param.getNextLexicalUnit(); // G value
-			sb.append(param.getIntegerValue());
+
+			if (paramClass.contains("FloatLexicalUnit")) {
+				sb.append(param.getFloatValue()); // G value
+			} else {
+				sb.append(param.getIntegerValue()); // G value
+			}
 			sb.append(',');
 			param = param.getNextLexicalUnit(); // comma
 			param = param.getNextLexicalUnit(); // B value
-			sb.append(param.getIntegerValue());
+
+			if (paramClass.contains("FloatLexicalUnit")) {
+				sb.append(param.getFloatValue()); // B value
+			} else {
+				sb.append(param.getIntegerValue()); // B value
+			}
 			sb.append(')');
 
 			return sb.toString();
